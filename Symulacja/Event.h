@@ -17,8 +17,8 @@ public:
   void showEvents();
 
   Event();
-  Event(int _event_type, Proces* _make_event_BDP);
-  Event(int _event_type, Proces* _make_event_BDP, int _event_time);
+  Event(int _event_type);
+  //Event(int _event_type, Proces* _make_event_BDP, int _event_time);
  
 
  

@@ -1,5 +1,5 @@
 #pragma once
-#include "Proces.h"
+//#include "Proces.h"
 //#include "UnitOfBlood.h"
 //#include "Patient.h"
 
@@ -9,15 +9,16 @@ class Event;
 
 
 class BloodDonationPoint
-  :public Proces
-{
-private:
- 
- Event* event_ptr_;
 
+{
+
+ 
 public:
   static const int min_blood_level;
   static int blood_level_;
+
+
+
   static  UnitOfBlood * unit_of_blood_list;
   static  UnitOfBlood * last_unit_of_blood_list;
 
@@ -29,8 +30,7 @@ public:
   static int remove_unit_of_blood();
   
 
-  void execute(Event* this_event) override;
-  
+ 
 
   static  void add_patient_to_queue(Patient* ptr_patient);
   static  void remove_first_patient_from_queue();

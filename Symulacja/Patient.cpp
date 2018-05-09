@@ -24,25 +24,25 @@ void Patient::showPatient()
 
 }
 
-void Patient::execute(Event* this_event)
+void Patient::execute()
 {
   //event_ptr_=this_event
   std::cout<<std::endl<<std::endl << "patient execute"<< std::endl<<std::endl;
-  while (event_ptr_->activate)
+  while (this_event->activate)
   {
-    switch (event_ptr_->phase)
+    switch (this_event->phase)
     {
       case 0:
       {
 
-        Event* new_event_ptr = new Event(PATIENT,(Proces*)blood_donation_point_ptr);
+        Event* new_event_ptr = new Event(PATIENT);
         event_list->schedule_event(new_event_ptr);
         std::cout << "zaplanowanie  nowego pacjêta -> " << std::endl;
         blood_donation_point_ptr->add_patient_to_queue(this);
         std::cout << "wstawienie pacjêta do kolejki " << std::endl;
         
 
-        event_ptr_->phase++;
+        this_event->phase++;
         break;
       }
       case 1:
@@ -53,9 +53,11 @@ void Patient::execute(Event* this_event)
           
           wait_until( event_list->find_patient_event(blood_donation_point_ptr->which_patient_in_the_queue(this)));
           std::cout << "przeplanowanie pacjêta -> " << std::endl;
-          event_ptr_->activate = false;
+          this_event->activate = false;
           break;
         }
+        this_event->phase++;
+          break;
       }
       case 2:
       {
@@ -65,34 +67,34 @@ void Patient::execute(Event* this_event)
           {
             blood_donation_point_ptr->remove_unit_of_blood();
           }
-          std::cout << "transfuzja krwi -> "<<std::endl;
-          event_ptr_->phase++;
+          std::cout << "transfuzja krwi -> " << std::endl;
+          this_event->phase++;
         }
         else
         {
           //zaplanuj zdarznie awaryjnej dostawy krwi
 
-          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY,blood_donation_point_ptr);
+          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY);
           event_list->schedule_event(new_event_ptr);
           std::cout << "zaplanowana awaryjn¹ dostawe krwi -> ";
           std::cout << "pacjêt czeka az jednostki przyjad¹ -> ";
           //poczekaj a¿ przyjd¹ jednostki;
           wait_until(new_event_ptr);
-          event_ptr_->activate = false;
-          
+          this_event->activate = false;
+
         }
-          break;
+        break;
       }
       case 3:
       {
           if(blood_donation_point_ptr->blood_level_<=blood_donation_point_ptr->min_blood_level)
           {
-            Event* new_event_ptr = new Event(BLOOD_SUPPLY,blood_donation_point_ptr);
+            Event* new_event_ptr = new Event(BLOOD_SUPPLY);
             std::cout << "zapalnowanie dostawy krwi -> " << std::endl;
             event_list->schedule_event(new_event_ptr);
           }
         blood_donation_point_ptr->remove_first_patient_from_queue();
-        //usuñ zdarzenie
+      //  event_ptr_->event_type = NO_IVENT;
       }
     }
   }
@@ -100,17 +102,17 @@ void Patient::execute(Event* this_event)
 
 void Patient::wait_until(Event* prevEvent)
 {
-  event_list->reschedule_event(event_ptr_,prevEvent);
+  event_list->reschedule_event(this_event,prevEvent);
 }
 
 
-Patient::Patient(Event* _event_ptr,BloodDonationPoint* bdp_ptr)
+Patient::Patient(Event* _event_ptr)
 {
-  blood_donation_point_ptr = bdp_ptr;
+ 
   needed_blood_units_ = rand()%10;
   std::cout << needed_blood_units_<<" ";
   next_patient_ = nullptr;
-  event_ptr_ = _event_ptr;
+  this_event= _event_ptr;
 }
 
 

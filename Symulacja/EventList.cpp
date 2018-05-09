@@ -61,9 +61,13 @@ void EventList::reschedule_event(Event* event, Event* prev_Event)
 
 void EventList::cancel_event(Event* event)
 {
-  event->next_event->prev_event = event->prev_event;
-  event->prev_event->next_event = event->next_event;
-  delete event;
+  if (event->event_type == NO_IVENT) 
+  {
+    event->next_event->prev_event = event->prev_event;
+    event->prev_event->next_event = event->next_event;
+    delete event;
+
+  }
 }
 
 Event* EventList::find_patient_event(int number_of_patient)
