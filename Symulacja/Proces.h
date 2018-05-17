@@ -8,8 +8,9 @@ class Proces
 {
 protected:
   Event * this_event;
- static  BloodDonationPoint* blood_donation_point_ptr;
+ 
 public:
+  static  BloodDonationPoint* blood_donation_point_ptr;
  virtual void execute()=0;
  // virtual void add_patient_to_queue(Patient* ptr_patient)=0;
  Proces();

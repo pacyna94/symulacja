@@ -94,7 +94,10 @@ void Patient::execute()
             event_list->schedule_event(new_event_ptr);
           }
         blood_donation_point_ptr->remove_first_patient_from_queue();
-      //  event_ptr_->event_type = NO_IVENT;
+        this_event->event_type = NO_IVENT;
+        this_event->activate = false;
+          break;
+          
       }
     }
   }

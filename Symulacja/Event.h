@@ -14,7 +14,7 @@ public:
   Event * next_event;
   Event * prev_event;
 
-  void showEvents();
+  //void showEvents();
 
   Event();
   Event(int _event_type);

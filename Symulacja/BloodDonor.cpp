@@ -20,6 +20,7 @@ void BloodDonor::execute()
 
   new_event_ptr = new Event(END_OF_VALIDITY);
   event_list->schedule_event(new_event_ptr);
+ 
 }
 
 BloodDonor::BloodDonor(Event* event)

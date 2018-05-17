@@ -11,18 +11,6 @@
 #include "BloodDonor.h"
 
 
-void Event::showEvents()
-{
- 
-  if (!flag)
-  {
-    std::cout << event_type << " ";
-    flag = true;
-    next_event->showEvents();
-    
-  }
- 
-}
 
 Event::Event()
 {
@@ -48,6 +36,7 @@ Event::Event(int _event_type)
     event_time =event_list->symulation_time+ rand() % 13;
     make_event = new Patient(this);
     std::cout << "zaplanowanie kolejnego pacjenta" << std::endl;
+    flag = true;
     break;
     //Odstêp czasu pomiêdzy pojawieniem siê kolejnych pacjentów 
     //wymagaj¹cych transfuzji jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym i œredniej =300
@@ -67,6 +56,7 @@ Event::Event(int _event_type)
     std::cout << "zaplanowanie  dostawy krwi -> "<< std::endl;
     make_event = new StandardBloodSupply(this);
     event_time = event_list->symulation_time + rand() % 10;
+    flag = true;
     break;  
   }
   case EMERGENCY_BLOOD_SUPPLY:
@@ -76,6 +66,7 @@ Event::Event(int _event_type)
     std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
     make_event = new EmergencyBloodSuply(this);
     event_time = event_list->symulation_time + rand() % 10;
+    flag = true;
     break;
   }
   case BLOOD_DONOR:
@@ -84,12 +75,14 @@ Event::Event(int _event_type)
     std::cout << "zaplanowanie kolejnego dawcy -> " << std::endl;
     event_type = BLOOD_DONOR;
     make_event = new BloodDonor(this);
-    event_time = event_list->symulation_time + rand() % 10;
+    event_time = event_list->symulation_time + rand() % 20;
+    flag = true;
      break;
   }
   default:
     {
     event_type = NO_IVENT;
+    flag = true;
     }
   }
   

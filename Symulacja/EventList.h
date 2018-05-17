@@ -7,6 +7,7 @@ class EventList
 {
   
 public:
+  static int events_number;
   static Event * headOfEventList;
   Event* remove_first_event();
   void schedule_event(Event* event);
@@ -14,6 +15,7 @@ public:
   void cancel_event(Event* event);
   Event* find_patient_event(int number_of_patient);
   static int symulation_time;
+  void show_list();
   EventList();
   ~EventList();
 };
