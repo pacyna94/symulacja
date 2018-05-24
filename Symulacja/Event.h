@@ -18,6 +18,8 @@ public:
 
   Event();
   Event(int _event_type);
+  Event(int _event_type,Patient* _patient_ptr);
+  Event(int _event_type,int _validation_time);
   //Event(int _event_type, Proces* _make_event_BDP, int _event_time);
  
 

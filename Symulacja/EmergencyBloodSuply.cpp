@@ -3,6 +3,7 @@
 #include "Symulacja.h"
 #include "Event.h"
 #include "UnitOfBlood.h"
+#include "EventList.h"
 
 void EmergencyBloodSuply::execute()
 {
@@ -16,13 +17,17 @@ void EmergencyBloodSuply::execute()
     blood_donation_point_ptr->add_unit_of_blood(unit_of_blood_ptr);
   }
   this_event->event_type = NO_IVENT;
-  Event* new_event_ptr = new Event(END_OF_VALIDITY);
+  Event* new_event_ptr = new Event(END_OF_VALIDITY,300);
   event_list->schedule_event(new_event_ptr);
+  patient_ptr->wakeUp();
+  //patient_ptr->execute();
+  
 }
 
-EmergencyBloodSuply::EmergencyBloodSuply(Event* event)
+EmergencyBloodSuply::EmergencyBloodSuply(Event* event, Patient* _patient_ptr)
 {
   this_event = event;
+  patient_ptr = _patient_ptr;
 }
 
 

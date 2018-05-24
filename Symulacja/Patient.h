@@ -21,7 +21,9 @@ public:
    // Patient* prev_patient; mozna stwierdzic czy pacjet jest pierwszy wkolejce;
     void showPatient();
     void execute() override;
+    void wakeUp();
     void wait_until(Event* prev_event);
+    
 
     Patient(Event* _event_ptr);
     ~Patient(); 

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Event.h"
 #include "Symulacja.h"
+#include "Proces.h"
+#include "EventList.h"
 
 
 /////////////////////
@@ -83,6 +85,25 @@ int BloodDonationPoint::remove_unit_of_blood()
   return 0;
 }
 
+void BloodDonationPoint::remove_expired_blood_units()
+{
+  while (last_unit_of_blood_list->exparation_date > Proces::event_list->symulation_time)
+  {
+    if (last_unit_of_blood_list->prev_blood_unit = nullptr)
+    {
+      delete unit_of_blood_list;
+      break;
+    }
+    else
+    {
+      last_unit_of_blood_list = last_unit_of_blood_list->prev_blood_unit;
+      delete last_unit_of_blood_list->next_blood_unit;
+    }
+  }
+
+ 
+}
+
 
 ////
 //pacjet
@@ -145,7 +166,7 @@ int BloodDonationPoint::which_patient_in_the_queue(Patient* ptr_patient)
 
 BloodDonationPoint::BloodDonationPoint()
 {
-  
+  //0 == 0;
  
 }
 

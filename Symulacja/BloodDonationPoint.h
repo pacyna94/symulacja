@@ -28,6 +28,7 @@ public:
   
   static int add_unit_of_blood(UnitOfBlood* ptr_UnitOfBlood);
   static int remove_unit_of_blood();
+  static void remove_expired_blood_units();
   
 
  

@@ -5,6 +5,7 @@
 #include "Event.h"
 #include "BloodDonationPoint.h"
 #include "Symulacja.h"
+#include "EventList.h"
 //EventList* event_list;
 
 
@@ -22,6 +23,12 @@ void Patient::showPatient()
     std::cout << needed_blood_units_ << " ";
   }
 
+}
+
+void Patient::wakeUp()
+{
+  this_event->activate = true;
+  execute();
 }
 
 void Patient::execute()
@@ -74,12 +81,12 @@ void Patient::execute()
         {
           //zaplanuj zdarznie awaryjnej dostawy krwi
 
-          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY);
+          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY,this);
           event_list->schedule_event(new_event_ptr);
           std::cout << "zaplanowana awaryjn¹ dostawe krwi -> ";
           std::cout << "pacjêt czeka az jednostki przyjad¹ -> ";
           //poczekaj a¿ przyjd¹ jednostki;
-          wait_until(new_event_ptr);
+         // wait_until(new_event_ptr);
           this_event->activate = false;
 
         }

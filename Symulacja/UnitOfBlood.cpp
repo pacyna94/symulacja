@@ -2,7 +2,8 @@
 #include "UnitOfBlood.h"
 #include "Event.h"
 #include <iostream>
-#include "Symulacja.h"
+#include "Proces.h"
+#include "EventList.h"
 
 
 void UnitOfBlood::showUnitOfBlood()
@@ -54,7 +55,7 @@ UnitOfBlood::UnitOfBlood()
 UnitOfBlood::UnitOfBlood(int _exparation_date)
 {
   UnitOfBlood();
-  exparation_date = event_list->symulation_time + exparation_date;
+  exparation_date = Proces::event_list->symulation_time + exparation_date;
 }
 
 
