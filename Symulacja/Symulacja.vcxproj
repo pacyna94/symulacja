@@ -155,6 +155,7 @@
     <ClInclude Include="EventList.h" />
     <ClInclude Include="Proces.h" />
     <ClInclude Include="Patient.h" />
+    <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="StandardBloodSupply.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Symulacja.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="EventList.cpp" />
     <ClCompile Include="Proces.cpp" />
     <ClCompile Include="Patient.cpp" />
+    <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="StandardBloodSupply.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

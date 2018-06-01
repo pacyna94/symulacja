@@ -10,6 +10,8 @@ public:
   int phase;
   bool flag;
   bool activate;
+  static int ID;
+  int id;
 
   Event * next_event;
   Event * prev_event;

@@ -8,9 +8,9 @@ class EmergencyBloodSuply :
 {
  
 public:
-  Patient * patient_ptr;
+  //Patient * patient_ptr;
   void execute() override;
-  EmergencyBloodSuply(Event* event,Patient* _patient_ptr);
+  EmergencyBloodSuply(Event* event);
   ~EmergencyBloodSuply();
 };
 

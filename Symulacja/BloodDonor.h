@@ -5,7 +5,7 @@
 class BloodDonor
   :public Proces
 {
-
+  static int ID;
 public:
   void execute() override;
   BloodDonor(Event* event);

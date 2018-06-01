@@ -10,14 +10,14 @@ int EventList::events_number = 0;
 
 Event* EventList::remove_first_event()
 {
-  //events_number--;
-  Event* event_ptr = headOfEventList->next_event;
-  headOfEventList->next_event=event_ptr->next_event;
-  headOfEventList->next_event->prev_event = headOfEventList;
- // event_ptr->next_event = nullptr;
- // event_ptr->prev_event = nullptr;
+  events_number--;
+  Event* event_ptr = headOfEventList->prev_event;
+  headOfEventList->prev_event=event_ptr->prev_event;
+  headOfEventList->prev_event->next_event = headOfEventList;
+  event_ptr->next_event = nullptr;
+  event_ptr->prev_event = nullptr;
   symulation_time = event_ptr->event_time;
-  event_ptr->activate = true;
+  event_ptr->activate = true;   
     return event_ptr;
 }
 
@@ -53,8 +53,8 @@ void EventList::schedule_event(Event* event)
 void EventList::reschedule_event(Event* event, Event* prev_Event)
 {
   //wyciagniecie obiektu z listy jeszcze nie wiem czy potrzebne
-  event->prev_event->next_event = event->next_event;
-  event->next_event->prev_event = event->prev_event;
+  //event->prev_event->next_event = event->next_event;
+  //event->next_event->prev_event = event->prev_event;
   // przeplanowanie zdarzenia
   event->event_time = prev_Event->event_time;
   event->next_event = prev_Event->next_event;
@@ -92,9 +92,36 @@ Event* EventList::find_patient_event(int number_of_patient)
 void EventList::show_list()
 {
   Event* event_ptr = headOfEventList;
+  std::cout << "event list:"<<std::endl;
   for(int i =0; i<events_number+2;i++)
   {
-    std::cout << event_ptr->event_type<<" ";
+   
+    switch (event_ptr->event_type)
+    {
+    case PATIENT:
+      std::cout << "PATIENT ";
+      std::cout << "       |id: " << event_ptr->make_event->id << "| ";
+      break;
+    case END_OF_VALIDITY:
+      std::cout << "END_OF_VALIDITY ";
+      break;
+    case BLOOD_DONOR:
+      std::cout << "BLOOD_DONOR ";
+      std::cout << "   |id: " << event_ptr->make_event->id << "| ";
+      break;
+    case BLOOD_SUPPLY:
+      std::cout << "BLOOD_SUPLY ";
+      break;
+    case EMERGENCY_BLOOD_SUPPLY:
+      std::cout << "EMERGENCY_BLOOD_SUPPLY ";
+      break;
+    default:
+      std::cout << "NO_IVENT ";
+
+      break;
+    }
+    
+    std::cout << "(" << event_ptr->event_time << ")" << std::endl;
     event_ptr = event_ptr->next_event;
   }
 }

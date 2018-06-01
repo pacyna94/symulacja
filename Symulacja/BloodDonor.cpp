@@ -5,7 +5,7 @@
 #include "UnitOfBlood.h"
 #include "EventList.h"
 
-
+int BloodDonor::ID = 0;
 void BloodDonor::execute()
 {
   //przyszed³ dawca
@@ -21,13 +21,15 @@ void BloodDonor::execute()
 
   new_event_ptr = new Event(END_OF_VALIDITY,500);
   event_list->schedule_event(new_event_ptr);
+  //if (blood_donation_point_ptr->first_patient_from_list)
+    //blood_donation_point_ptr->first_patient_from_list->wakeUp();
  
 }
 
 BloodDonor::BloodDonor(Event* event)
 {
   this_event = event;
-  
+  id = ID++;
 }
 
 

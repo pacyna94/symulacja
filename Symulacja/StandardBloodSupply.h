@@ -6,13 +6,13 @@
 class StandardBloodSupply :
   public Proces
 {
-  Patient* patient_ptr;
+  //Patient* patient_ptr;
   
 
 public:
 
   void execute() override;
-  StandardBloodSupply(Event* event, Patient* _patient_ptr);
+  StandardBloodSupply(Event* event);
   ~StandardBloodSupply();
 };
 

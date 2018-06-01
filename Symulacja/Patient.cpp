@@ -9,18 +9,20 @@
 //EventList* event_list;
 
 
+int Patient::ID = 0;
+
 
 
 void Patient::showPatient()
 {
   if (next_patient_)
   {
-    std::cout << needed_blood_units_<<" ";
+    std::cout << id<<" "<<needed_blood_units_<<std::endl;
     next_patient_->showPatient();
   }
   else
   {
-    std::cout << needed_blood_units_ << " ";
+    std::cout <<id<<" "<< needed_blood_units_ << " " << std::endl;;
   }
 
 }
@@ -28,13 +30,15 @@ void Patient::showPatient()
 void Patient::wakeUp()
 {
   this_event->activate = true;
-  execute();
+  this_event->event_time = event_list->symulation_time;
+  event_list->schedule_event(this_event);
+  //execute();
 }
 
 void Patient::execute()
 {
   //event_ptr_=this_event
-  std::cout<<std::endl<<std::endl << "patient execute"<< std::endl<<std::endl;
+  std::cout<<std::endl<<std::endl << "patient id: "<<id<< std::endl<<std::endl;
   while (this_event->activate)
   {
     switch (this_event->phase)
@@ -46,6 +50,8 @@ void Patient::execute()
         event_list->schedule_event(new_event_ptr);
         std::cout << "zaplanowanie  nowego pacjêta -> " << std::endl;
         blood_donation_point_ptr->add_patient_to_queue(this);
+        std::cout << "pacjent::" << std::endl;
+        blood_donation_point_ptr->first_patient_from_list->showPatient();
         std::cout << "wstawienie pacjêta do kolejki " << std::endl;
         
 
@@ -58,8 +64,9 @@ void Patient::execute()
         {
           //poczekaj a¿ bedzie pierwszy
           
-          wait_until( event_list->find_patient_event(blood_donation_point_ptr->which_patient_in_the_queue(this)));
-          std::cout << "przeplanowanie pacjêta -> " << std::endl;
+         // wait_until( event_list->find_patient_event(blood_donation_point_ptr->which_patient_in_the_queue(this)));
+         
+          std::cout << "pacjêt czeka az bedzie 1 w kolejce-> " << std::endl;
           this_event->activate = false;
           break;
         }
@@ -81,7 +88,8 @@ void Patient::execute()
         {
           //zaplanuj zdarznie awaryjnej dostawy krwi
 
-          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY,this);
+
+          Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY);
           event_list->schedule_event(new_event_ptr);
           std::cout << "zaplanowana awaryjn¹ dostawe krwi -> ";
           std::cout << "pacjêt czeka az jednostki przyjad¹ -> ";
@@ -101,6 +109,8 @@ void Patient::execute()
             event_list->schedule_event(new_event_ptr);
           }
         blood_donation_point_ptr->remove_first_patient_from_queue();
+        if(blood_donation_point_ptr->first_patient_from_list)
+       blood_donation_point_ptr->first_patient_from_list->wakeUp();
         this_event->event_type = NO_IVENT;
         this_event->activate = false;
           break;
@@ -112,6 +122,7 @@ void Patient::execute()
 
 void Patient::wait_until(Event* prevEvent)
 {
+ //trzeba wyj¹æ z kolejki zaczêtych eventów i dopiero wstawiæ
   event_list->reschedule_event(this_event,prevEvent);
 }
 
@@ -123,6 +134,7 @@ Patient::Patient(Event* _event_ptr)
   std::cout << needed_blood_units_<<" ";
   next_patient_ = nullptr;
   this_event= _event_ptr;
+  id = ID++;
 }
 
 

@@ -125,12 +125,13 @@ void BloodDonationPoint::add_patient_to_queue(Patient* ptr_patient)
 
 void BloodDonationPoint::remove_first_patient_from_queue()
 {
-  Patient* delete_patient = first_patient_from_list;
+ // Patient* delete_patient = first_patient_from_list;
   if(first_patient_from_list->next_patient_)
   first_patient_from_list = first_patient_from_list->next_patient_;
   else
   {
     first_patient_from_list = nullptr;
+    last_patient_from_list = nullptr;
   }
   //delete delete_patient;
 }

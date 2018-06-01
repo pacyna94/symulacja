@@ -14,6 +14,8 @@ protected:
   Event * this_event;
  
 public:
+  int id;
+
   static  EventList* event_list;
   static  BloodDonationPoint* blood_donation_point_ptr;
 

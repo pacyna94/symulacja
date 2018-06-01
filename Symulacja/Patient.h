@@ -8,13 +8,12 @@ class Event;
 class Patient
   :public Proces
 {
-
+  
 
 public:
   //protected:
-
- 
-
+  static int ID;
+  
     int needed_blood_units_; //Liczba jednostek krwi podawan pojedynczemu pacjentowi jest zmienn¹ 
                             //losow¹ o rozk³adzie geometrycznym i œredniej 100/19
     Patient * next_patient_;

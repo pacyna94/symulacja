@@ -20,13 +20,14 @@ void StandardBloodSupply::execute()
   Event* new_event_ptr = new Event(END_OF_VALIDITY,300);
   event_list->schedule_event(new_event_ptr);
   //standardowe zmównienie krwi
-  patient_ptr->wakeUp();
+  if (blood_donation_point_ptr->first_patient_from_list)
+    blood_donation_point_ptr->first_patient_from_list->wakeUp();
 }
 
-StandardBloodSupply::StandardBloodSupply(Event* event, Patient* _patient_ptr)
+StandardBloodSupply::StandardBloodSupply(Event* event)
 {
   this_event = event;
-  patient_ptr = _patient_ptr;
+  //patient_ptr = _patient_ptr;
 }
 
 

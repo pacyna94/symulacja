@@ -15,6 +15,7 @@
 
 Event::Event()
 {
+  make_event = nullptr;
   next_event = this;
   prev_event = this;
   event_type = NO_IVENT;
@@ -62,43 +63,36 @@ Event::Event(int _event_type)
     flag = true;
      break;
   }
+  case BLOOD_SUPPLY:
+  {
+    event_type = BLOOD_SUPPLY;
+    //Czas od wys³ania zamówienia do otrzymania krwi jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym o œredniej = 2000
+    std::cout << "zaplanowanie  dostawy krwi -> " << std::endl;
+    make_event = new StandardBloodSupply(this);
+    event_time = Proces::event_list->symulation_time + rand() % 10;
+    flag = true;
+    break;
+  }
+  case EMERGENCY_BLOOD_SUPPLY:
+  {
+    event_type = EMERGENCY_BLOOD_SUPPLY;
+    //Czas dostarczenia takiego zamówienia jest zmienn¹ losow¹ o rozk³adzie normalnym, œredniej 600 i wariancji 0.1
+    std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
+    make_event = new EmergencyBloodSuply(this);
+    event_time = Proces::event_list->symulation_time + rand() % 10;
+    flag = true;
+    break;
+  }
   default:
     {
     event_type = NO_IVENT;
+    make_event = nullptr;
     flag = true;
     }
   }
   
 }
-Event::Event(int _event_type, Patient* _patient_ptr)
-{ 
-  switch (_event_type)
-  {
 
-    case BLOOD_SUPPLY:
-    {
-      event_type = BLOOD_SUPPLY;
-      //Czas od wys³ania zamówienia do otrzymania krwi jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym o œredniej = 2000
-      std::cout << "zaplanowanie  dostawy krwi -> " << std::endl;
-      make_event = new StandardBloodSupply(this, _patient_ptr);
-      event_time = Proces::event_list->symulation_time + rand() % 10;
-      flag = true;
-      break;
-    }
-    case EMERGENCY_BLOOD_SUPPLY:
-    {
-      event_type = EMERGENCY_BLOOD_SUPPLY;
-      //Czas dostarczenia takiego zamówienia jest zmienn¹ losow¹ o rozk³adzie normalnym, œredniej 600 i wariancji 0.1
-      std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
-      make_event = new EmergencyBloodSuply(this, _patient_ptr);
-      event_time = Proces::event_list->symulation_time + rand() % 10;
-      flag = true;
-      break;
-    }
-    default:
-      break;
-  }
-}
 
 Event::Event(int _event_type, int _validation_time)
 {
@@ -115,5 +109,7 @@ Event::~Event()
 {
   next_event = nullptr;
   prev_event = nullptr;
+  if(make_event)
+  delete make_event;
  //event_phase = 0;
 }
