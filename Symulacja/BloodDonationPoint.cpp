@@ -79,25 +79,28 @@ int BloodDonationPoint::add_unit_of_blood(UnitOfBlood* ptr_UnitOFBlood)
 int BloodDonationPoint::remove_unit_of_blood()
 {
   blood_level_--;
-  UnitOfBlood * ptr_uob = unit_of_blood_list;
-  unit_of_blood_list = unit_of_blood_list->next_blood_unit;
+  UnitOfBlood * ptr_uob = last_unit_of_blood_list;
+  last_unit_of_blood_list = last_unit_of_blood_list->prev_blood_unit;
+  last_unit_of_blood_list->next_blood_unit = nullptr;
+  if(ptr_uob)
   delete ptr_uob;
   return 0;
 }
 
 void BloodDonationPoint::remove_expired_blood_units()
 {
-  while (last_unit_of_blood_list->exparation_date > Proces::event_list->symulation_time)
+  while (last_unit_of_blood_list->exparation_date < Proces::event_list->symulation_time)
   {
-    if (last_unit_of_blood_list->prev_blood_unit = nullptr)
+    
+    if (last_unit_of_blood_list->prev_blood_unit == nullptr)
     {
-      delete unit_of_blood_list;
+     
       break;
     }
     else
     {
-      last_unit_of_blood_list = last_unit_of_blood_list->prev_blood_unit;
-      delete last_unit_of_blood_list->next_blood_unit;
+
+      remove_unit_of_blood();
     }
   }
 
@@ -174,4 +177,5 @@ BloodDonationPoint::BloodDonationPoint()
 
 BloodDonationPoint::~BloodDonationPoint()
 {
+
 }

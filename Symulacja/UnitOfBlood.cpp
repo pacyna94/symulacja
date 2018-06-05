@@ -61,4 +61,6 @@ UnitOfBlood::UnitOfBlood(int _exparation_date)
 
 UnitOfBlood::~UnitOfBlood()
 {
+  next_blood_unit = nullptr;
+  prev_blood_unit = nullptr;
 }

@@ -1,17 +1,20 @@
 #pragma once
 #include "Proces.h"
-
+#include "RandomNumberGenerator.h"
 class Event
 {
 public:
   Proces * make_event;
-  int event_time;
+  double event_time;
   int event_type;
+  static int ID;
+  int id;
   int phase;
   bool flag;
   bool activate;
-  static int ID;
-  int id;
+  static bool stopFlag;
+  static int numberOfPntient;
+  static RandomNumberGenerator* randomNumberGenerator;
 
   Event * next_event;
   Event * prev_event;

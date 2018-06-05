@@ -9,9 +9,12 @@ int BloodDonor::ID = 0;
 void BloodDonor::execute()
 {
   //przyszed³ dawca
-
-  Event* new_event_ptr = new Event(BLOOD_DONOR);
-  event_list->schedule_event(new_event_ptr);
+  Event* new_event_ptr;
+  if (Event::stopFlag)
+  {
+    new_event_ptr = new Event(BLOOD_DONOR);
+    event_list->schedule_event(new_event_ptr);
+  }
   //czas przydatnoœci T2=500
   //dawca oddaje 1 jednostke krwi
 

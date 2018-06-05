@@ -4,7 +4,7 @@
 #include <iostream>
 
 Event* EventList::headOfEventList = nullptr;
-int EventList::symulation_time = 0;
+double EventList::symulation_time = 0;
 int EventList::events_number = 0;
 //class Event;
 
@@ -111,6 +111,7 @@ void EventList::show_list()
       break;
     case BLOOD_SUPPLY:
       std::cout << "BLOOD_SUPLY ";
+      std::cout << "   |id: " << event_ptr->make_event->id << "| ";
       break;
     case EMERGENCY_BLOOD_SUPPLY:
       std::cout << "EMERGENCY_BLOOD_SUPPLY ";

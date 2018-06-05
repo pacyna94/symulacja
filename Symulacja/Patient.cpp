@@ -38,21 +38,24 @@ void Patient::wakeUp()
 void Patient::execute()
 {
   //event_ptr_=this_event
-  std::cout<<std::endl<<std::endl << "patient id: "<<id<< std::endl<<std::endl;
+  std::cout<<std::endl<<std::endl << "patient id: "<<id<<" needed_blood_units_: "<<needed_blood_units_<< std::endl<<std::endl;
   while (this_event->activate)
   {
     switch (this_event->phase)
     {
       case 0:
       {
-
-        Event* new_event_ptr = new Event(PATIENT);
-        event_list->schedule_event(new_event_ptr);
-        std::cout << "zaplanowanie  nowego pacjêta -> " << std::endl;
+        Event* new_event_ptr;
+        if (id > Event::numberOfPntient)
+          Event::stopFlag = true;
+        if(!this_event->stopFlag)
+        {
+          new_event_ptr = new Event(PATIENT);
+          event_list->schedule_event(new_event_ptr);
+          std::cout << "zaplanowanie  nowego pacjêta -> " << std::endl;
+        }
         blood_donation_point_ptr->add_patient_to_queue(this);
-        std::cout << "pacjent::" << std::endl;
-        blood_donation_point_ptr->first_patient_from_list->showPatient();
-        std::cout << "wstawienie pacjêta do kolejki " << std::endl;
+        std::cout << "wstawienie pacjêta do kolejki-> " << std::endl;
         
 
         this_event->phase++;
@@ -62,10 +65,6 @@ void Patient::execute()
       {
         if (blood_donation_point_ptr->first_patient_from_list != this)
         {
-          //poczekaj a¿ bedzie pierwszy
-          
-         // wait_until( event_list->find_patient_event(blood_donation_point_ptr->which_patient_in_the_queue(this)));
-         
           std::cout << "pacjêt czeka az bedzie 1 w kolejce-> " << std::endl;
           this_event->activate = false;
           break;
@@ -81,20 +80,19 @@ void Patient::execute()
           {
             blood_donation_point_ptr->remove_unit_of_blood();
           }
+         
           std::cout << "transfuzja krwi -> " << std::endl;
           this_event->phase++;
         }
         else
         {
-          //zaplanuj zdarznie awaryjnej dostawy krwi
+          
 
 
           Event* new_event_ptr = new Event(EMERGENCY_BLOOD_SUPPLY);
           event_list->schedule_event(new_event_ptr);
           std::cout << "zaplanowana awaryjn¹ dostawe krwi -> ";
           std::cout << "pacjêt czeka az jednostki przyjad¹ -> ";
-          //poczekaj a¿ przyjd¹ jednostki;
-         // wait_until(new_event_ptr);
           this_event->activate = false;
 
         }
@@ -130,7 +128,7 @@ void Patient::wait_until(Event* prevEvent)
 Patient::Patient(Event* _event_ptr)
 {
  
-  needed_blood_units_ = rand()%10;
+  needed_blood_units_ = this_event->randomNumberGenerator->GeometeicGenerator(0.19);
   std::cout << needed_blood_units_<<" ";
   next_patient_ = nullptr;
   this_event= _event_ptr;
@@ -141,4 +139,5 @@ Patient::Patient(Event* _event_ptr)
 Patient::~Patient()
 {
   next_patient_ = nullptr;
+  this_event = nullptr;
 }

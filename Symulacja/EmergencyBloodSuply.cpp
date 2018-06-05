@@ -22,25 +22,23 @@ void EmergencyBloodSuply::execute()
   this_event->event_type = NO_IVENT;
   std::cout << "zaplanowanie koñca przydatnoœci krwi->" << std::endl;
   Event* new_event_ptr = new Event(END_OF_VALIDITY,300);
-  std::cout << "tuuuuuu patrzeæ/////////////////////////////////////////////////////////////" << std::endl;
-  event_list->show_list();
   
   event_list->schedule_event(new_event_ptr);
-  event_list->show_list();
-  std::cout << "/////////////////////////////////////////////////////////////" << std::endl;
+ 
+  
   if(blood_donation_point_ptr->first_patient_from_list)
   blood_donation_point_ptr->first_patient_from_list->wakeUp();
-  //patient_ptr->execute();
   
 }
 
 EmergencyBloodSuply::EmergencyBloodSuply(Event* event)
 {
   this_event = event;
- // patient_ptr = _patient_ptr;
+ 
 }
 
 
 EmergencyBloodSuply::~EmergencyBloodSuply()
 {
+  this_event = nullptr;
 }

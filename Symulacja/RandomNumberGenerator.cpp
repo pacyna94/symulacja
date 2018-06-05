@@ -29,16 +29,26 @@ double RandomNumberGenerator::ExpGenerator(double lambda_)
   return -(1.0 / lambda_)*log(k);
 }
 
-double RandomNumberGenerator::NormalGenerator(int mi, double sigma)
+double RandomNumberGenerator::NormalGenerator(int average, double variance)
 {
   double k = UniformGenerator();
-  return -sigma*sqrt(2.0*3.14159)*log(pow(k-mi,2)/(2*sigma*sigma));
+  double x=0;
+  for (int i = 0; i < 12; i++)
+  {
+    x += UniformGenerator();
+  }
+  x = (x - 6);
+  x = sqrt(variance)*x + average;
+  return x;
+ // return -sigma*sqrt(2.0*3.14159)*log(pow(k-mi,2)/(2*sigma*sigma));
 }
 
-double RandomNumberGenerator::GeometeicGenerator(double ave)
+int RandomNumberGenerator::GeometeicGenerator(double ave)
 {
-  double k = UniformGenerator();
-  return 1 - pow(1.0 - k, 1/ave);
+  //double k = UniformGenerator();
+  int i = 1;
+    while (UniformGenerator() > ave) ++i;
+  return i;
 }
 
 RandomNumberGenerator::RandomNumberGenerator(int _kernel)

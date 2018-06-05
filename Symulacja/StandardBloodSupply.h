@@ -6,8 +6,7 @@
 class StandardBloodSupply :
   public Proces
 {
-  //Patient* patient_ptr;
-  
+  static int ID;
 
 public:
 

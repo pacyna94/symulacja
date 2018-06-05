@@ -14,7 +14,7 @@ public:
   void reschedule_event(Event* event,Event* prev_Event);
   void cancel_event(Event* event);
   Event* find_patient_event(int number_of_patient);
-  static int symulation_time;
+  static double symulation_time;
   void show_list();
   EventList();
   ~EventList();

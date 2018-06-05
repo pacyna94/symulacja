@@ -13,8 +13,9 @@ public:
   double UniformGenerator();
   double UniformGenerator(int start, int end);
   double ExpGenerator(double lambda_);
-  double NormalGenerator(int mi, double sigma);
-  double GeometeicGenerator(double ave);
+  double NormalGenerator(int average , double variance);
+  int GeometeicGenerator(double ave);
+  
 
   RandomNumberGenerator(int _kernel);
 
