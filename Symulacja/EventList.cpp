@@ -3,9 +3,11 @@
 #include "Event.h"
 #include <iostream>
 
+bool EventList::endOfSymulation = false;
 Event* EventList::headOfEventList = nullptr;
 double EventList::symulation_time = 0;
 int EventList::events_number = 0;
+
 //class Event;
 
 Event* EventList::remove_first_event()
@@ -115,6 +117,7 @@ void EventList::show_list()
       break;
     case EMERGENCY_BLOOD_SUPPLY:
       std::cout << "EMERGENCY_BLOOD_SUPPLY ";
+      std::cout << "       |id: " << event_ptr->make_event->id << "| ";
       break;
     default:
       std::cout << "NO_IVENT ";

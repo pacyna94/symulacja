@@ -2,21 +2,24 @@
 //#include "Proces.h"
 //#include "UnitOfBlood.h"
 //#include "Patient.h"
+#include <fstream>
 
 class Patient;
 class UnitOfBlood;
 class Event;
-
+//using namespace std;
 
 class BloodDonationPoint
-
 {
-
  
 public:
+ // static std::fstream stream;
+
+  static bool standard_blood_supply_on_the_way;
+  static bool emergency_blood_supply_on_the_way;
   static const int min_blood_level;
   static int blood_level_;
-
+  static int patien_coutner;
 
 
   static  UnitOfBlood * unit_of_blood_list;

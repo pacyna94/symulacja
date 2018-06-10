@@ -49,13 +49,13 @@ UnitOfBlood::UnitOfBlood()
   next_blood_unit = nullptr;
   prev_blood_unit = nullptr;
   exparation_date = -1;
-  std::cout << exparation_date << " ";
+ 
 }
 
 UnitOfBlood::UnitOfBlood(int _exparation_date)
 {
   UnitOfBlood();
-  exparation_date = Proces::event_list->symulation_time + exparation_date;
+  exparation_date = Proces::event_list->symulation_time + _exparation_date;
 }
 
 

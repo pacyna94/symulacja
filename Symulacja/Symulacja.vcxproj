@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClInclude Include="BloodDonationPoint.h" />
     <ClInclude Include="BloodDonor.h" />
-    <ClInclude Include="EmergencyBloodSuply.h" />
+    <ClInclude Include="EmergencyBloodSupply.h" />
     <ClInclude Include="EndOfValidity.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventList.h" />
@@ -165,7 +165,7 @@
   <ItemGroup>
     <ClCompile Include="BloodDonationPoint.cpp" />
     <ClCompile Include="BloodDonor.cpp" />
-    <ClCompile Include="EmergencyBloodSuply.cpp" />
+    <ClCompile Include="EmergencyBloodSupply.cpp" />
     <ClCompile Include="EndOfValidity.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventList.cpp" />

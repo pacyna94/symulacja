@@ -7,6 +7,7 @@ class EventList
 {
   
 public:
+  static bool endOfSymulation;
   static int events_number;
   static Event * headOfEventList;
   Event* remove_first_event();

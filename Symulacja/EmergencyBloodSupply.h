@@ -3,14 +3,15 @@
 #include "BloodDonationPoint.h"
 #include "Patient.h"
 
-class EmergencyBloodSuply :
+class EmergencyBloodSupply :
   public Proces
 {
- 
+  static int ID;
+  
 public:
   //Patient * patient_ptr;
   void execute() override;
-  EmergencyBloodSuply(Event* event);
-  ~EmergencyBloodSuply();
+  EmergencyBloodSupply(Event* event);
+  ~EmergencyBloodSupply();
 };
 

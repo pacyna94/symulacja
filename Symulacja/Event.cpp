@@ -7,7 +7,7 @@
 #include "UnitOfBlood.h"
 #include  "StandardBloodSupply.h"
 #include "Symulacja.h"
-#include "EmergencyBloodSuply.h"
+#include "EmergencyBloodSupply.h"
 #include "BloodDonor.h"
 #include "EndOfValidity.h"
 
@@ -40,7 +40,7 @@ Event::Event(int _event_type)
     event_type = PATIENT;
     event_time = Proces::event_list->symulation_time + randomNumberGenerator->ExpGenerator(1.0/300);
     make_event = new Patient(this);
-    std::cout << "zaplanowanie kolejnego pacjenta" << std::endl;
+    //std::cout << "zaplanowanie kolejnego pacjenta" << std::endl;
     flag = true;
     break;
     //Odstêp czasu pomiêdzy pojawieniem siê kolejnych pacjentów 
@@ -51,7 +51,7 @@ Event::Event(int _event_type)
   case BLOOD_DONOR:
   {
     //Czas miêdzy zg³oszeniem siê kolejnych dawców jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym i œredniej 800
-    std::cout << "zaplanowanie kolejnego dawcy -> " << std::endl;
+    //std::cout << "zaplanowanie kolejnego dawcy -> " << std::endl;
     event_type = BLOOD_DONOR;
     make_event = new BloodDonor(this);
     event_time = Proces::event_list->symulation_time + randomNumberGenerator->ExpGenerator(1.0/800);
@@ -62,21 +62,23 @@ Event::Event(int _event_type)
   {
     event_type = BLOOD_SUPPLY;
     //Czas od wys³ania zamówienia do otrzymania krwi jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym o œredniej = 2000
-    std::cout << "zaplanowanie  dostawy krwi -> " << std::endl;
+    //std::cout << "zaplanowanie  dostawy krwi -> " << std::endl;
 
     make_event = new StandardBloodSupply(this);
-    event_time = Proces::event_list->symulation_time + randomNumberGenerator->ExpGenerator(1.0/2000);
+    event_time = Proces::event_list->symulation_time + randomNumberGenerator->ExpGenerator(1.0/2000.0);
     flag = true;
+    Proces::number_of_standard_blood_supply++;
     break;
   }
   case EMERGENCY_BLOOD_SUPPLY:
   {
     event_type = EMERGENCY_BLOOD_SUPPLY;
     //Czas dostarczenia takiego zamówienia jest zmienn¹ losow¹ o rozk³adzie normalnym, œredniej 600 i wariancji 0.1
-    std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
-    make_event = new EmergencyBloodSuply(this);
+    //std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
+    make_event = new EmergencyBloodSupply(this);
     event_time = Proces::event_list->symulation_time + randomNumberGenerator->NormalGenerator(600,0.1);
     flag = true;
+    Proces::number_of_emergency_blood_supply++;
     break;
   }
   default:
@@ -92,7 +94,7 @@ Event::Event(int _event_type)
 
 Event::Event(int _event_type, int _validation_time)
 {
-  std::cout << "zaplanowanie koñca przydatnoœci krwi -> " << std::endl;
+  //std::cout << "zaplanowanie koñca przydatnoœci krwi -> " << std::endl;
   event_type = END_OF_VALIDITY;
   make_event = new EndOfValidity(this);
   event_time = Proces::event_list->symulation_time + _validation_time;

@@ -45,9 +45,6 @@
     <ClInclude Include="BloodDonor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EmergencyBloodSuply.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StandardBloodSupply.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,6 +52,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RandomNumberGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EmergencyBloodSupply.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,9 +86,6 @@
     <ClCompile Include="BloodDonor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EmergencyBloodSuply.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StandardBloodSupply.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RandomNumberGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EmergencyBloodSupply.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
