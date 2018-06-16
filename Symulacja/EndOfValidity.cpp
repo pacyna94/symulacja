@@ -1,17 +1,18 @@
 #include "stdafx.h"
 #include "EndOfValidity.h"
-//#include "Symulacja.h"
-
-
+#include "Symulacja.h"
+//#include <fstream>
+//extern std::fstream stream;
 
 
 void EndOfValidity::execute()
 {
   //usnuñ wszystkie przeteminowane jednostki krwi
+  int x = blood_donation_point_ptr->blood_level_;
   if(blood_donation_point_ptr->blood_level_)
   blood_donation_point_ptr->remove_expired_blood_units();
   //std::cout << "Usuwanie przeterminowanych jednostek krwi->" << std::endl;
-
+ 
 
   if ((!blood_donation_point_ptr->standard_blood_supply_on_the_way)&&(blood_donation_point_ptr->blood_level_ <= blood_donation_point_ptr->min_blood_level))
   {
@@ -21,6 +22,7 @@ void EndOfValidity::execute()
   }
   
   this_event->event_type = NO_IVENT;
+  stream<< Proces::event_list->symulation_time<<" " << x - blood_donation_point_ptr->blood_level_ << std::endl;
 }
 
 EndOfValidity::EndOfValidity(Event * _event_ptr)

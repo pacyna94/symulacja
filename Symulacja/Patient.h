@@ -2,6 +2,7 @@
 #include "Proces.h"
 //#include "Event.h"
 //#include "BloodDonationPoint.h"
+#include "RandomNumberGenerator.h"
 class BloodDonationPoint;
 class Event;
 
@@ -15,13 +16,13 @@ public:
   static int ID;
   
     int needed_blood_units_; //Liczba jednostek krwi podawan pojedynczemu pacjentowi jest zmienn¹ 
-                            //losow¹ o rozk³adzie geometrycznym i œredniej 100/19
+    static RandomNumberGenerator* rng_needed_blood_units;                       //losow¹ o rozk³adzie geometrycznym i œredniej 100/19
     Patient * next_patient_;
    // Patient* prev_patient; mozna stwierdzic czy pacjet jest pierwszy wkolejce;
     void showPatient();
     void execute() override;
     void wakeUp();
-    void wait_until(Event* prev_event);
+ 
     
 
     Patient(Event* _event_ptr);

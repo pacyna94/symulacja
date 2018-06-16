@@ -38,11 +38,6 @@ void UnitOfBlood::showBackward()
   }
 }
 
-/*void UnitOfBlood::execute()
-{
-  
-}
-*/
 
 UnitOfBlood::UnitOfBlood()
 {

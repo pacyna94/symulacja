@@ -12,14 +12,21 @@ int EventList::events_number = 0;
 
 Event* EventList::remove_first_event()
 {
-  events_number--;
+  
+ 
   Event* event_ptr = headOfEventList->prev_event;
+  if (BloodDonationPoint::blood_test_check(event_ptr->event_time))
+  {
+    event_ptr= new Event(BLOOD_TEST);
+    return event_ptr;
+  }
   headOfEventList->prev_event=event_ptr->prev_event;
   headOfEventList->prev_event->next_event = headOfEventList;
   event_ptr->next_event = nullptr;
   event_ptr->prev_event = nullptr;
   symulation_time = event_ptr->event_time;
   event_ptr->activate = true;   
+  events_number--;
     return event_ptr;
 }
 
@@ -119,6 +126,8 @@ void EventList::show_list()
       std::cout << "EMERGENCY_BLOOD_SUPPLY ";
       std::cout << "       |id: " << event_ptr->make_event->id << "| ";
       break;
+    case BLOOD_TEST:
+      std::cout << "BLOD_TESTS" << std::endl;
     default:
       std::cout << "NO_IVENT ";
 

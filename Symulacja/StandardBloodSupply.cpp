@@ -12,7 +12,7 @@ void StandardBloodSupply::execute()
   //czas przydatnoœci T1=300
   //ilosæ zamówionych jednostek N=17
   //add_unit_of_blood();
-  for (int i = 0; i < 30; i++)
+  for (int i = 0; i < 17; i++)
   {
    UnitOfBlood* unit_of_blood_ptr = new UnitOfBlood(300);
    blood_donation_point_ptr->add_unit_of_blood(unit_of_blood_ptr);

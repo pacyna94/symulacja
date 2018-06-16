@@ -11,7 +11,7 @@ class UnitOfBlood
   //BloodDonationPoint * blood_donation_point_ptr;
   UnitOfBlood * next_blood_unit;
   UnitOfBlood * prev_blood_unit;
-  int exparation_date;
+  double exparation_date;
   void showUnitOfBlood();
   void showBackward();
   //void execute() override;

@@ -3,7 +3,7 @@
 #include "Event.h"
 #include "EventList.h"
 #include <iostream>
-
+#include "Symulacja.h"
 
 class EndOfValidity :
   public Proces

@@ -16,7 +16,7 @@ void EmergencyBloodSupply::execute()
   //czas przydatnoœci T1 =300
   //std::cout <<std::endl<< "EmergencyBloodSupply execute:" << std::endl;
   //std::cout << "utowrzenie jednostek krwi->" << std::endl;
-  for (int i = 0; i < 20; i++)
+  for (int i = 0; i < 12; i++)
   {
     UnitOfBlood* unit_of_blood_ptr = new UnitOfBlood(300);
     blood_donation_point_ptr->add_unit_of_blood(unit_of_blood_ptr);

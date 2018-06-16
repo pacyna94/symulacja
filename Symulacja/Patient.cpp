@@ -6,11 +6,12 @@
 #include "BloodDonationPoint.h"
 #include "Symulacja.h"
 #include "EventList.h"
+#include <omp.h>
 //EventList* event_list;
 
 
 int Patient::ID = 0;
-
+RandomNumberGenerator* Patient::rng_needed_blood_units = new RandomNumberGenerator(4 + (omp_get_thread_num() *7));
 
 
 void Patient::showPatient()
@@ -120,17 +121,13 @@ void Patient::execute()
   }
 }
 
-void Patient::wait_until(Event* prevEvent)
-{
- //trzeba wyj¹æ z kolejki zaczêtych eventów i dopiero wstawiæ
-  event_list->reschedule_event(this_event,prevEvent);
-}
+
 
 
 Patient::Patient(Event* _event_ptr)
 {
  
-  needed_blood_units_ = this_event->randomNumberGenerator->GeometeicGenerator(0.19);
+  needed_blood_units_ = rng_needed_blood_units->GeometeicGenerator(0.19);
   //std::cout << needed_blood_units_<<" ";
   next_patient_ = nullptr;
   this_event= _event_ptr;

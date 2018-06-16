@@ -14,18 +14,19 @@ public:
   bool activate;
   static bool stopFlag;
   static int numberOfPntient;
-  static RandomNumberGenerator* randomNumberGenerator;
-
+  static RandomNumberGenerator* rngPatient;
+  static RandomNumberGenerator* rngBloodDonor;
+  static RandomNumberGenerator* rngEmegrencyBloodSupply;
+  static RandomNumberGenerator* rngBloodSuply;
+ 
   Event * next_event;
   Event * prev_event;
 
-  //void showEvents();
-
+ 
   Event();
   Event(int _event_type);
-  Event(int _event_type,Patient* _patient_ptr);
   Event(int _event_type,int _validation_time);
-  //Event(int _event_type, Proces* _make_event_BDP, int _event_time);
+  
  
 
  
@@ -40,5 +41,6 @@ enum
   BLOOD_SUPPLY,
   EMERGENCY_BLOOD_SUPPLY,
   BLOOD_DONOR,
+  BLOOD_TEST,
   NO_IVENT
 };

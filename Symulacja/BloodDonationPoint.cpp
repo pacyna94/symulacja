@@ -16,13 +16,13 @@ using namespace std;
 ////////////////////
 bool BloodDonationPoint::standard_blood_supply_on_the_way = false;
 bool BloodDonationPoint::emergency_blood_supply_on_the_way = false;
+bool BloodDonationPoint::blood_test_flag = false;
 
-const int BloodDonationPoint::min_blood_level = 30; //minimalny poziom krwi R =20
+const int BloodDonationPoint::min_blood_level = 20; //minimalny poziom krwi R =20
 
 int BloodDonationPoint::blood_level_ = 0;
-
-int BloodDonationPoint::patien_coutner=0;
-
+int BloodDonationPoint::patien_coutner = 0;
+double BloodDonationPoint::blood_test_time = 0.0;
 UnitOfBlood* BloodDonationPoint::unit_of_blood_list = nullptr;
 UnitOfBlood* BloodDonationPoint::last_unit_of_blood_list = nullptr;
 
@@ -143,6 +143,26 @@ void BloodDonationPoint::remove_expired_blood_units()
  
 }
 
+bool BloodDonationPoint::blood_test_check(double this_time_ )
+{
+  if(blood_level_<15)
+  {
+   // blood_test_flag = false;//nie wiadomo czy potrzebne??
+    blood_test_time = this_time_;
+    return false;
+  }
+  else
+  {
+    if ((this_time_ - blood_test_time) >= 300)
+      return true;
+    else
+    {
+      
+      return false;
+    }
+  }
+
+}
 
 ////
 //pacjet
