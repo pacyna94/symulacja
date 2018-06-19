@@ -22,9 +22,11 @@ void EndOfValidity::execute()
   }
   
   this_event->event_type = NO_IVENT;
-  expiried_units_counter += x - blood_donation_point_ptr->blood_level_;
-    bloodStream << Proces::event_list->symulation_time<<BloodDonationPoint::blood_counter<<" "
-    <<expiried_units_counter<< ((double)expiried_units_counter)/BloodDonationPoint::blood_counter<<std::endl;
+  if (EventList::end_of_transition_phase_flag)
+  {
+    expiried_units_counter += x - blood_donation_point_ptr->blood_level_;
+    bloodStream << Proces::event_list->symulation_time << BloodDonationPoint::blood_counter << ":" << ((double)expiried_units_counter) / BloodDonationPoint::blood_counter << std::endl;
+  }
 }
 
 EndOfValidity::EndOfValidity(Event * _event_ptr)

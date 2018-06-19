@@ -108,8 +108,7 @@ Event::Event(int _event_type)
   }
   if (EventList::end_of_transition_phase_flag)
   {
-    supplyStream << EventList::symulation_time << " " <<EventList::events_counter << " " <<
-      Proces::number_of_emergency_blood_supply << " " << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter << std::endl;
+    supplyStream << EventList::symulation_time << ":" << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter << std::endl;
     supplyStream.flush();
   }
 }
@@ -126,8 +125,7 @@ Event::Event(int _event_type, int _validation_time)
   
   if (EventList::end_of_transition_phase_flag)
   {
-    supplyStream << EventList::symulation_time << " " << EventList::events_counter << " " <<
-      Proces::number_of_emergency_blood_supply << " " << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter << std::endl;
+    supplyStream << EventList::symulation_time << ":" << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter <<std::endl;
     supplyStream.flush();
   }
 
