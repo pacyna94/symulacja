@@ -1,12 +1,16 @@
 #include "stdafx.h"
 #include "EventList.h"
 #include "Event.h"
+#include "Symulacja.h"
 #include <iostream>
 
 bool EventList::endOfSymulation = false;
+bool EventList::end_of_transition_phase_flag = false;
 Event* EventList::headOfEventList = nullptr;
 double EventList::symulation_time = 0;
 int EventList::events_number = 0;
+int EventList::events_counter = 0;
+const int EventList::end_of_transition_phase = 600;
 
 //class Event;
 
@@ -32,6 +36,7 @@ Event* EventList::remove_first_event()
 
 void EventList::schedule_event(Event* event)
 {
+ 
   events_number++;
   Event* event_ptr = headOfEventList;
   

@@ -14,13 +14,13 @@
 #include <omp.h>
 
 
-RandomNumberGenerator* Event::rngPatient = new RandomNumberGenerator(0 + (omp_get_thread_num()* 7) );
-RandomNumberGenerator* Event::rngBloodDonor = new RandomNumberGenerator(1 + (omp_get_thread_num() * 7));
-RandomNumberGenerator* Event::rngEmegrencyBloodSupply = new RandomNumberGenerator(2 + (omp_get_thread_num() * 7));
-RandomNumberGenerator* Event::rngBloodSuply = new RandomNumberGenerator(3 + (omp_get_thread_num() * 7));
+RandomNumberGenerator* Event::rngPatient = new RandomNumberGenerator(0 + (symulation_counter* 7) );
+RandomNumberGenerator* Event::rngBloodDonor = new RandomNumberGenerator(1 + (symulation_counter * 7));
+RandomNumberGenerator* Event::rngEmegrencyBloodSupply = new RandomNumberGenerator(2 + (symulation_counter * 7));
+RandomNumberGenerator* Event::rngBloodSuply = new RandomNumberGenerator(3 + (symulation_counter * 7));
 
 bool Event::stopFlag = false;
-int Event::numberOfPntient = 0;
+int Event::numberOfEmergencyBloodSupply = 0;
 Event::Event()
 {
   make_event = nullptr;
@@ -32,6 +32,8 @@ Event::Event()
   activate =false;
   //FLAGA DO WYŒWIETLANIA
   flag = false;
+  EventList::events_counter++;
+  
 }
 
 Event::Event(int _event_type)
@@ -69,11 +71,12 @@ Event::Event(int _event_type)
     event_type = BLOOD_SUPPLY;
     //Czas od wys³ania zamówienia do otrzymania krwi jest zmienn¹ losow¹ o rozk³adzie wyk³adniczym o œredniej = 2000
     //std::cout << "zaplanowanie  dostawy krwi -> " << std::endl;
-
+    Proces::number_of_standard_blood_supply++;
     make_event = new StandardBloodSupply(this);
     event_time = Proces::event_list->symulation_time + rngBloodSuply->ExpGenerator(1.0/2000.0);
     flag = true;
-    Proces::number_of_standard_blood_supply++;
+    
+
     break;
   }
   case EMERGENCY_BLOOD_SUPPLY:
@@ -81,10 +84,11 @@ Event::Event(int _event_type)
     event_type = EMERGENCY_BLOOD_SUPPLY;
     //Czas dostarczenia takiego zamówienia jest zmienn¹ losow¹ o rozk³adzie normalnym, œredniej 600 i wariancji 0.1
     //std::cout << "zaplanowanie awaryjnej dostawy krwi -> " << std::endl;
+    Proces::number_of_emergency_blood_supply++;
     make_event = new EmergencyBloodSupply(this);
     event_time = Proces::event_list->symulation_time + rngEmegrencyBloodSupply->NormalGenerator(600,0.1);
     flag = true;
-    Proces::number_of_emergency_blood_supply++;
+
     break;
   }
   case BLOOD_TEST:
@@ -102,18 +106,30 @@ Event::Event(int _event_type)
     flag = true;
     }
   }
-  
+  if (EventList::end_of_transition_phase_flag)
+  {
+    supplyStream << EventList::symulation_time << " " <<EventList::events_counter << " " <<
+      Proces::number_of_emergency_blood_supply << " " << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter << std::endl;
+    supplyStream.flush();
+  }
 }
 
 
 Event::Event(int _event_type, int _validation_time)
 {
   //std::cout << "zaplanowanie koñca przydatnoœci krwi -> " << std::endl;
+  Event();
   event_type = END_OF_VALIDITY;
   make_event = new EndOfValidity(this);
   event_time = Proces::event_list->symulation_time + _validation_time;
   flag = true;
- 
+  
+  if (EventList::end_of_transition_phase_flag)
+  {
+    supplyStream << EventList::symulation_time << " " << EventList::events_counter << " " <<
+      Proces::number_of_emergency_blood_supply << " " << ((double)Proces::number_of_emergency_blood_supply) / EventList::events_counter << std::endl;
+    supplyStream.flush();
+  }
 
 }
 

@@ -8,8 +8,11 @@ class EventList
   
 public:
   static bool endOfSymulation;
+  static bool end_of_transition_phase_flag;
+  static int events_counter;
   static int events_number;
   static Event * headOfEventList;
+  static const int end_of_transition_phase;
   Event* remove_first_event();
   void schedule_event(Event* event);
   void reschedule_event(Event* event,Event* prev_Event);

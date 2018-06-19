@@ -4,9 +4,10 @@
 #include "iostream"
 #include <math.h>
 #include <omp.h>
+#include "Symulacja.h"
 
 
-RandomNumberGenerator* BloodTests::rngBloodTests = new RandomNumberGenerator(5 * (omp_get_thread_num() * 7));
+RandomNumberGenerator* BloodTests::rngBloodTests = new RandomNumberGenerator(5 * (symulation_counter * 7));
 
 void BloodTests::execute()
 {

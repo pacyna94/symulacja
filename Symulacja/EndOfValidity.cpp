@@ -4,7 +4,7 @@
 //#include <fstream>
 //extern std::fstream stream;
 
-
+int EndOfValidity::expiried_units_counter = 0;
 void EndOfValidity::execute()
 {
   //usnuñ wszystkie przeteminowane jednostki krwi
@@ -22,7 +22,9 @@ void EndOfValidity::execute()
   }
   
   this_event->event_type = NO_IVENT;
-  stream<< Proces::event_list->symulation_time<<" " << x - blood_donation_point_ptr->blood_level_ << std::endl;
+  expiried_units_counter += x - blood_donation_point_ptr->blood_level_;
+    bloodStream << Proces::event_list->symulation_time<<BloodDonationPoint::blood_counter<<" "
+    <<expiried_units_counter<< ((double)expiried_units_counter)/BloodDonationPoint::blood_counter<<std::endl;
 }
 
 EndOfValidity::EndOfValidity(Event * _event_ptr)

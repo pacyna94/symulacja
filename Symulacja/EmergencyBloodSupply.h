@@ -6,9 +6,10 @@
 class EmergencyBloodSupply :
   public Proces
 {
-  static int ID;
+  
   
 public:
+  static int ID;
   //Patient * patient_ptr;
   void execute() override;
   EmergencyBloodSupply(Event* event);

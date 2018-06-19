@@ -17,10 +17,10 @@ using namespace std;
 bool BloodDonationPoint::standard_blood_supply_on_the_way = false;
 bool BloodDonationPoint::emergency_blood_supply_on_the_way = false;
 bool BloodDonationPoint::blood_test_flag = false;
-
-const int BloodDonationPoint::min_blood_level = 20; //minimalny poziom krwi R =20
-
+int BloodDonationPoint::min_blood_level = 20; //minimalny poziom krwi R =20
+int BloodDonationPoint::number_of_ordered_units = 17;
 int BloodDonationPoint::blood_level_ = 0;
+int BloodDonationPoint::blood_counter = 0;
 int BloodDonationPoint::patien_coutner = 0;
 double BloodDonationPoint::blood_test_time = 0.0;
 UnitOfBlood* BloodDonationPoint::unit_of_blood_list = nullptr;
@@ -38,11 +38,9 @@ Patient* BloodDonationPoint::last_patient_from_list = nullptr;
 int BloodDonationPoint::add_unit_of_blood(UnitOfBlood* ptr_UnitOFBlood)
 {
   blood_level_++;
-  std::fstream stream;
-  stream.open("wyniki//bloodLevel.txt", ios::out | ios::app);
-  stream << Proces::event_list->symulation_time << " " << blood_level_ << std::endl;
-  stream.flush();
-  stream.close();
+  blood_counter++;
+  
+  
   // std::cout << blood_level_<<" ";
   if (!unit_of_blood_list) {
     unit_of_blood_list = ptr_UnitOFBlood;
@@ -91,11 +89,7 @@ int BloodDonationPoint::add_unit_of_blood(UnitOfBlood* ptr_UnitOFBlood)
 int BloodDonationPoint::remove_unit_of_blood()
 {
   blood_level_--;
-  std::fstream stream;
-  stream.open("wyniki//bloodLevel.txt", ios::out | ios::app);
-  stream << Proces::event_list->symulation_time << " " << blood_level_ << std::endl;
-  stream.flush();
-  stream.close();
+
   
   UnitOfBlood * ptr_uob;
   if (last_unit_of_blood_list->prev_blood_unit == nullptr)
@@ -123,10 +117,7 @@ void BloodDonationPoint::remove_expired_blood_units()
     if (last_unit_of_blood_list->prev_blood_unit == nullptr)
     {
       blood_level_--;
-      std::fstream stream;
-      stream.open("wyniki//bloodLevel.txt", ios::out | ios::app);
-      stream << Proces::event_list->symulation_time << " " << blood_level_ << std::endl;
-      stream.close();
+
       UnitOfBlood * ptr_uob = last_unit_of_blood_list;
       unit_of_blood_list = nullptr;
       last_unit_of_blood_list = nullptr;
@@ -171,11 +162,14 @@ bool BloodDonationPoint::blood_test_check(double this_time_ )
 void BloodDonationPoint::add_patient_to_queue(Patient* ptr_patient)
 {
   patien_coutner++;
-  std::fstream stream;
-  stream.open("wyniki//patientLevel.txt", ios::out | ios::app);
-  stream << Proces::event_list->symulation_time << " " << patien_coutner << std::endl;
-  stream.close();
-
+  if (patien_coutner > 1000000)
+  {
+    std::cout << endl;
+    std::cout <<"pacjêt potrzebuje tyle jednostek krwi: "<< first_patient_from_list->needed_blood_units_ << endl;
+    std::cout << "koniec symulacji bo za du¿o pacjêtów w kolejce " << endl;
+    EventList::endOfSymulation = true;
+    return;
+  }
   if(!first_patient_from_list)
   {
     first_patient_from_list = ptr_patient;
@@ -191,10 +185,7 @@ void BloodDonationPoint::add_patient_to_queue(Patient* ptr_patient)
 void BloodDonationPoint::remove_first_patient_from_queue()
 {
   patien_coutner--;
-  std::fstream stream;
-  stream.open("wyniki//patientLevel.txt", ios::out | ios::app);
-  stream << Proces::event_list->symulation_time << " " << patien_coutner << std::endl;
-  stream.close();
+ 
  // Patient* delete_patient = first_patient_from_list;
   if(first_patient_from_list->next_patient_)
   first_patient_from_list = first_patient_from_list->next_patient_;
@@ -203,7 +194,7 @@ void BloodDonationPoint::remove_first_patient_from_queue()
     first_patient_from_list = nullptr;
     last_patient_from_list = nullptr;
   }
-  //delete delete_patient;
+  
 }
 
 int BloodDonationPoint::which_patient_in_the_queue(Patient* ptr_patient)

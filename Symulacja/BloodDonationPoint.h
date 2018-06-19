@@ -18,8 +18,10 @@ public:
   static bool standard_blood_supply_on_the_way;
   static bool emergency_blood_supply_on_the_way;
   static bool blood_test_flag;
-  static const int min_blood_level;
+  static int min_blood_level;
   static int blood_level_;
+  static int blood_counter;
+  static int number_of_ordered_units;
   static int patien_coutner;
   static double blood_test_time;
 

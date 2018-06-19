@@ -11,14 +11,14 @@
 
 
 int Patient::ID = 0;
-RandomNumberGenerator* Patient::rng_needed_blood_units = new RandomNumberGenerator(4 + (omp_get_thread_num() *7));
+RandomNumberGenerator* Patient::rng_needed_blood_units = new RandomNumberGenerator(4 + (symulation_counter *7));
 
 
 void Patient::showPatient()
 {
   if (next_patient_)
   {
-    //std::cout << id<<" "<<needed_blood_units_<<std::endl;
+    std::cout << id<<" "<<needed_blood_units_<<std::endl;
     next_patient_->showPatient();
   }
   else
@@ -91,6 +91,9 @@ void Patient::execute()
             event_list->schedule_event(new_event_ptr);
             //std::cout << "zaplanowana awaryjn¹ dostawe krwi -> ";
             //std::cout << "pacjêt czeka az jednostki przyjad¹ -> ";
+           /* if(EventList::end_of_transition_phase_flag)
+            supplyStream << id << " " << Proces::number_of_emergency_blood_supply<<" "<<
+              ((double)Proces::number_of_emergency_blood_supply)/id << std::endl;*/
           }
           this_event->activate = false;
 
@@ -105,15 +108,18 @@ void Patient::execute()
             //std::cout << "zapalnowanie dostawy krwi -> " << std::endl;
             event_list->schedule_event(new_event_ptr);
           }
-        blood_donation_point_ptr->remove_first_patient_from_queue();
+          BloodDonationPoint::remove_first_patient_from_queue();
         if(blood_donation_point_ptr->first_patient_from_list)
        blood_donation_point_ptr->first_patient_from_list->wakeUp();
         this_event->event_type = NO_IVENT;
         this_event->activate = false;
-        if (id % ((int)Event::numberOfPntient / 100) == 0)
-          std::cout << "#";
-        if (id > Event::numberOfPntient)
-          EventList::endOfSymulation = true;
+
+        if (EventList::endOfSymulation)
+        {
+          
+          if (blood_donation_point_ptr->first_patient_from_list)
+            blood_donation_point_ptr->remove_first_patient_from_queue();
+        }
           break;
           
       }
@@ -139,4 +145,5 @@ Patient::~Patient()
 {
   next_patient_ = nullptr;
   this_event = nullptr;
+  needed_blood_units_ = -1;
 }

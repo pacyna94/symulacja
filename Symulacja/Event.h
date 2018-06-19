@@ -13,7 +13,7 @@ public:
   bool flag;
   bool activate;
   static bool stopFlag;
-  static int numberOfPntient;
+  static int numberOfEmergencyBloodSupply;
   static RandomNumberGenerator* rngPatient;
   static RandomNumberGenerator* rngBloodDonor;
   static RandomNumberGenerator* rngEmegrencyBloodSupply;
